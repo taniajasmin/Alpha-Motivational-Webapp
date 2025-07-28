@@ -3,21 +3,20 @@ from dotenv import load_dotenv
 import os
 from datetime import datetime
 
-# Load environment variables
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def get_motivational_message(age, name, gender, language, mission, tone, grind_level):
     current_time = datetime.now().strftime("%I:%M %p %z on %A, %B %d, %Y")
-    prompt = f"Generate a short, uplifting motivational message in {language} for a {age} year-old named {name}, identified as {gender}. Their mission is to {mission.lower()}, delivered in a {tone.lower()} tone to match a {grind_level.lower()} grind level. Current time is {current_time}."
+    prompt = f"Generate a concise, uplifting motivational message in {language}, limited to 1-2 sentences, for a {age} year-old named {name}, identified as {gender}. Their mission is to {mission.lower()}, delivered in a {tone.lower()} tone to match a {grind_level.lower()} grind level, tailored to the current time: {current_time}."
     try:
         response = openai.ChatCompletion.create(
             model="gpt-4o",
             messages=[
-                {"role": "system", "content": "You are a motivational coach."},
+                {"role": "system", "content": "You are a motivational coach. Provide concise, uplifting messages limited to 1-2 sentences."},
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=100
+            max_tokens=40  # Reduced to enforce 1-2 sentences
         )
         return response.choices[0].message['content'].strip()
     except Exception as e:
@@ -44,7 +43,7 @@ def collect_user_info():
 
     # Language options
     print("1. English (US)\n2. English (UK)\n3. French (FR)\n4. German (DE)")
-    language_choice = int(input("Select your language (1-3): "))
+    language_choice = int(input("Select your language (1-4): "))  # Fixed range to 1-4
     language_options = ["English (US)", "English (UK)", "French (FR)", "German (DE)"]
     language = language_options[language_choice - 1] if 1 <= language_choice <= 4 else "English (US)"
 
@@ -76,12 +75,10 @@ def collect_user_info():
         "grind_level": grind_level
     }
 
-# Main execution
 if __name__ == "__main__":
     # Collect user info dynamically
     user_data = collect_user_info()
     
-    # Generate and print the motivational message
     message = get_motivational_message(
         user_data["age"],
         user_data["name"],
