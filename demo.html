@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpha Motivation</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        select, input { width: 100%; padding: 8px; }
+        button { background-color: #333; color: white; padding: 10px 20px; border: none; cursor: pointer; }
+        button:hover { background-color: #555; }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Alpha</h1>
+    <form action="/generate" method="post">
+        <div class="form-group">
+            <label for="age">How old are you?</label>
+            <select id="age" name="age" required>
+                <option value="13 to 17">13 to 17</option>
+                <option value="18 to 24">18 to 24</option>
+                <option value="25 to 34">25 to 34</option>
+                <option value="35 to 44">35 to 44</option>
+                <option value="45 to 54">45 to 54</option>
+                <option value="55+">55+</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="name">What do you want to be called?</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="gender">What is your gender?</label>
+            <select id="gender" name="gender" required>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Other">Other</option>
+                <option value="Prefer not to say">Prefer not to say</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="language">What language do you prefer?</label>
+            <select id="language" name="language" required>
+                <option value="English (US)">English (US)</option>
+                <option value="English (UK)">English (UK)</option>
+                <option value="French (FR)">French (FR)</option>
+                <option value="German (DE)">German (DE)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="mission">What is your mission?</label>
+            <select id="mission" name="mission" required>
+                <option value="Dominate my discipline">Dominate my discipline</option>
+                <option value="Crush my business/career">Crush my business/career</option>
+                <option value="Conquer my body">Conquer my body</option>
+                <option value="Forge an unbreakable mindset">Forge an unbreakable mindset</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="tone">How do you want your motivation?</label>
+            <select id="tone" name="tone" required>
+                <option value="Hardcore">Hardcore</option>
+                <option value="Elite">Elite</option>
+                <option value="Hybrid">Hybrid</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="grind_level">How deep is your grind?</label>
+            <select id="grind_level" name="grind_level" required>
+                <option value="Starting the climb">Starting the climb</option>
+                <option value="In the trenches">In the trenches</option>
+                <option value="No mercy">No mercy</option>
+            </select>
+        </div>
+        <button type="submit">Allow and Save</button>
+    </form>
+    <div id="result"></div>
+    <script>
+        document.querySelector('form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const response = await fetch('/generate', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            document.getElementById('result').innerText = data.motivation;
+        });
+    </script>
+</body>
+</html>
