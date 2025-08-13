@@ -27,7 +27,7 @@ Alpha Motivational Webapp is built using FastAPI and powered by OpenAI's GPT mod
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/Alpha-Motivational-Webapp.git
+   git clone https://github.com/taniajasmin/Alpha-Motivational-Webapp.git
    cd Alpha-Motivational-Webapp
    ```
 
